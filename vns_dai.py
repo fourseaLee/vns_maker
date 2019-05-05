@@ -1,11 +1,12 @@
 import json
-import vns_web3
+#import vns_web3
 from vns_web3 import Web3, HTTPProvider
 import rlp
-from solc import compile_source
 from web3.contract import ConciseContract
+import vns_params
+logger = vns_params.initLogger("dai.log")
+
 web3 = Web3(HTTPProvider('http://192.168.0.40:8585'))
-web3.vns.defaultAccount = '0xa9632c83a3f53f6ffa800f5d7b6410f7f481fa9a'
 
 def getCat():
     json_file = open('dss/output/Cat.abi', 'r')
@@ -190,6 +191,7 @@ def getVat():
     bin_file = open('dss/output/Vat.bin', 'r')
     contract_bin = bin_file.read()
     bin_file.close()
+    logger.info(json_abi)
 
     vat = web3.vns.contract(abi=json_abi, bytecode=contract_bin)
     return vat
